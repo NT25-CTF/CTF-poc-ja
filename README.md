@@ -12,7 +12,6 @@ PoCとして、プロセスを自動化するPythonファイルを作成しま�
 ```bash
 pip install -r requirements.txt
 ```
-#### :
 
 
 * netcatリスナーを起動して、リバースシェル接続を受け入れます。<br>
