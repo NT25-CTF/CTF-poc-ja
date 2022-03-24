@@ -1,29 +1,7 @@
-# log4j-shell-poc
-CVE-2021-44228(通称Log4shell)に対するPoC。  
+CVE-2021-44228に対するPoC。  
 最近、ElasticSearchや Minecraftなどで広く使われている Javaのロギングライブラリlog4jに新たな脆弱性が発見されました。
 
 このリポジトリでは、脆弱性のあるアプリケーションの例と、その脆弱性を利用したPoCの例を作成しています。
-
-
-実行プロセス
-----------------------------------------
-
-Vuln Webアプリケーション:
-
-https://user-images.githubusercontent.com/87979263/146113359-20663eaa-555d-4d60-828d-a7f769ebd266.mp4
-
-<br>
-
-Ghidra (古いスクリプト):
-
-https://user-images.githubusercontent.com/87979263/145728478-b4686da9-17d0-4511-be74-c6e6fff97740.mp4
-
-<br>
-
-Minecraft PoC (古いスクリプト):
-
-https://user-images.githubusercontent.com/87979263/145681727-2bfd9884-a3e6-45dd-92e2-a624f29a8863.mp4
-
 
 概念実証(PoC)
 ----------------------
